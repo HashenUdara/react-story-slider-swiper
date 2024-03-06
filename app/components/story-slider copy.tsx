@@ -1,4 +1,3 @@
-//@ts-nocheck
 "use client";
 import React, { useRef, useState } from "react";
 // Import Swiper React components
@@ -6,37 +5,39 @@ import { Swiper, SwiperSlide } from "swiper/react";
 
 // Import Swiper styles
 import "swiper/css";
+import "swiper/css/effect-cube";
 import "swiper/css/pagination";
-import "swiper/css/navigation";
 
 import "../swiper.css";
 
 // import required modules
-import {
+import SwiperCore, {
   Autoplay,
-  EffectCoverflow,
-  Pagination,
   Navigation,
+  EffectCube,
+  Pagination,
 } from "swiper/modules";
 import Image from "next/image";
 
 import Img1 from "@/public/img/1.jpg";
 import Img2 from "@/public/img/2.jpg";
 import Img3 from "@/public/img/3.jpg";
-export default function App() {
+export default function StorySlider() {
   const progressCircle = useRef(null);
   const progressContent = useRef(null);
-  const onAutoplayTimeLeft = (s, time, progress) => {
+  const onAutoplayTimeLeft = (s: any, time: any, progress: any) => {
+    // @ts-ignore
     progressCircle.current.style.setProperty("--progress", 1 - progress);
+    // @ts-ignore
     progressContent.current.textContent = `${Math.ceil(time / 1000)}s`;
   };
 
   const handleTouchStart = (swiper: any) => {
-    swiper.autoplay.pause();
+    swiper.autoplay.stop();
   };
 
   const handleTouchEnd = (swiper: any) => {
-    swiper.autoplay.resume();
+    swiper.autoplay.start();
   };
 
   return (
@@ -52,16 +53,10 @@ export default function App() {
             // stopOnLastSlide: true,
             //   waitForTransition: true,
           }}
-          coverflowEffect={{
-            rotate: 50,
-            stretch: 0,
-            depth: 100,
-            modifier: 1,
-            slideShadows: true,
-          }}
+          onAutoplayTimeLeft={onAutoplayTimeLeft}
           pagination={false}
-          navigation={true}
-          modules={[Autoplay, EffectCoverflow, Pagination]}
+          navigation={false}
+          modules={[Autoplay, Pagination]}
           className="mySwiper"
         >
           <SwiperSlide>
@@ -72,12 +67,16 @@ export default function App() {
                 autoplay={{
                   delay: 2500,
                   disableOnInteraction: false,
-                }}
-                pagination={{
-                  clickable: true,
+                  // pauseOnMouseEnter: true,
+                  // stopOnLastSlide: true,
+                  //   waitForTransition: true,
                 }}
                 onTouchStart={handleTouchStart}
                 onTouchEnd={handleTouchEnd}
+                // noSwiping={true}
+                pagination={{
+                  clickable: true,
+                }}
                 navigation={true}
                 modules={[Autoplay, Pagination, Navigation]}
                 onAutoplayTimeLeft={onAutoplayTimeLeft}
@@ -106,6 +105,18 @@ export default function App() {
           </SwiperSlide>
           <SwiperSlide>
             <img src="https://swiperjs.com/demos/images/nature-3.jpg" />
+          </SwiperSlide>
+          <SwiperSlide>
+            <img src="https://swiperjs.com/demos/images/nature-4.jpg" />
+          </SwiperSlide>
+          <SwiperSlide>
+            <img src="https://swiperjs.com/demos/images/nature-4.jpg" />
+          </SwiperSlide>
+          <SwiperSlide>
+            <img src="https://swiperjs.com/demos/images/nature-4.jpg" />
+          </SwiperSlide>
+          <SwiperSlide>
+            <img src="https://swiperjs.com/demos/images/nature-4.jpg" />
           </SwiperSlide>
           <SwiperSlide>
             <img src="https://swiperjs.com/demos/images/nature-4.jpg" />
